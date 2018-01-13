@@ -76,12 +76,15 @@
             // 
             this.listView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.listView.Location = new System.Drawing.Point(373, 41);
+            this.listView.MultiSelect = false;
             this.listView.Name = "listView";
             this.listView.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.listView.Size = new System.Drawing.Size(385, 166);
+            this.listView.Size = new System.Drawing.Size(419, 166);
             this.listView.TabIndex = 3;
             this.listView.TabStop = false;
             this.listView.UseCompatibleStateImageBehavior = false;
+            this.listView.View = System.Windows.Forms.View.List;
+            this.listView.DoubleClick += new System.EventHandler(this.listView_DoubleClick);
             // 
             // label1
             // 

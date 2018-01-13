@@ -2,18 +2,19 @@
 {
     using System;
     using System.Windows.Forms;
+    using System.Collections.Generic;
     using System.IO;
     public partial class PasteWnd : Form
     {
         public PasteWndType Destination { get; set; }
-        public string[] files { get; set; }
+        public List<string> files { get; set; }
 
         public PasteWnd()
         {
             InitializeComponent();
         }
 
-        public PasteWnd(PasteWndType destination, string[] files)
+        public PasteWnd(PasteWndType destination, List<string> files)
         {
             InitializeComponent();
 
