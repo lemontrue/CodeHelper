@@ -75,6 +75,7 @@
             // listView
             // 
             this.listView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.listView.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.listView.Location = new System.Drawing.Point(373, 41);
             this.listView.MultiSelect = false;
             this.listView.Name = "listView";

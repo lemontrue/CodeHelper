@@ -56,22 +56,19 @@
                 {
                     if (text.Contains(str))
                     {
-                        valid += $"Файл {file} содержит введенный текст" + "\n";
+                        valid += $"Файл \n{file} \nСОДЕРЖИТ текст \n{ str }\n";
                     }
                     else
                     {
-                        resultString += $"Данный текст в файле { file } не встречается" + "\n";
+                        resultString += $"Текст \n{ str } \nв файле \n{ file }\n НЕ ВСТРЕЧАЕТСЯ\n";
                     }
                 }
                 
-                resultString += !string.IsNullOrEmpty(valid)
-                    ? $"В файле {file} найдены следующие поля:" + "\n"
-                    : $"В файле { file } не найдено совпадений";
+                resultString = !string.IsNullOrEmpty(valid)
+                    ? valid
+                    : resultString;
 
-                if (!string.IsNullOrEmpty(resultString))
-                {
-                    MessageBox.Show(resultString);
-                }
+                MessageBox.Show(resultString);
             }
         }
 
