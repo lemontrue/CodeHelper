@@ -1,0 +1,7 @@
+[Bb]in
+obj
+/obj
+obj/
+*.suo
+*.ide*
+*.lock
