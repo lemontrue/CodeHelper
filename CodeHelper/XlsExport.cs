@@ -12,7 +12,7 @@
         private IWorksheet _worksheet;
         private ExcelEngine _excelEngine;
 
-        private const string abc = "ABCDEFGHIJKLMNOPQRSTWXYZ";
+        private const string dictionary = "ABCDEFGHIJKLMNOPQRSTWXYZ";
 
         public XlsExport()
         {
@@ -42,7 +42,7 @@
                 {
                     string text = File.ReadAllText(paths[i]);
 
-                    Set(i + 1, j + 1, text.Contains(values[i]));
+                    Set(j, i, text.Contains(values[j]));
                 }
             }
 
@@ -68,16 +68,16 @@
 
             for (int j = 0; j < paths.Length; j++)
             {
-                var charCol = abc[j + 1];
-                _worksheet.Range[$"{charCol}1"].ColumnWidth = paths[j].Length * 2;
+                var charCol = dictionary[j + 1];
+                _worksheet.Range[$"{charCol}1"].ColumnWidth = paths[j].Length;
                 _worksheet.Range[$"{charCol}1"].Text = paths[j];
             }
         }
 
         private void Set(int iRow, int iCol, bool valid)
         {
-            var charCol = abc[iCol];
-            _worksheet.Range[$"{charCol}{iRow + 1}"].CellStyle.Color = valid ? Color.Green : Color.Red;
+            var charCol = dictionary[iCol + 1];
+            _worksheet.Range[$"{charCol}{iRow + 2}"].CellStyle.Color = valid ? Color.Green : Color.Red;
         }
     }
 }
