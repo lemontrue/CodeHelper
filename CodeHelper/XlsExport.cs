@@ -17,7 +17,11 @@ namespace CodeHelper
 
         public XlsExport()
         {
-            
+        }
+
+        public XlsExport(IWorkbook _workbook)
+        {
+            this.Workbook = _workbook;
         }
         public void Initialize(string[] paths, string[] values)
         {

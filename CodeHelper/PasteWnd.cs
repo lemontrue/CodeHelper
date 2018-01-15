@@ -32,7 +32,8 @@
             }
             else
             {
-                CheckCode();
+                //CheckCode();
+                CheckWithExport();
             }
 
             this.Close();
@@ -85,6 +86,10 @@
             return new string[] { };
         }
 
-
+        private void CheckWithExport()
+        {
+            XlsExport XlsExport = new XlsExport();
+            XlsExport.Initialize(files.ToArray(), FormatRichTextBox());
+        }
     }
 }
