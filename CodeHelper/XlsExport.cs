@@ -1,47 +1,83 @@
-﻿using System.Linq;
-
-namespace CodeHelper
+﻿namespace CodeHelper
 {
-    using Syncfusion;
-    using System;
     using Syncfusion.XlsIO;
     using System.IO;
     using Syncfusion.Drawing;
-    using System.Collections.Generic;
     using Syncfusion.XlsIO.Implementation;
+    using System.Linq;
 
     public class XlsExport
     {
-        public IWorkbook Workbook { get; set; }
-        public IWorksheet Worksheet { get; set; }
+        private IWorkbook _workbook;
+        private IWorksheet _worksheet;
+        private ExcelEngine _excelEngine;
+
+        private const string abc = "ABCDEFGHIJKLMNOPQRSTWXYZ";
 
         public XlsExport()
         {
+            Init();
         }
 
-        public XlsExport(IWorkbook _workbook)
+        private void Init()
         {
-            this.Workbook = _workbook;
-        }
-        public void Initialize(string[] paths, string[] values)
-        {
-            var worksheets = Workbook.Worksheets;
-            Worksheet = worksheets[0];
+            _excelEngine = new ExcelEngine();
+            IApplication application = _excelEngine.Excel;
 
-            for (int i = 0; i < paths.ToList().Count; i++)
+            application.DefaultVersion = ExcelVersion.Excel2016;
+
+            _workbook = application.Workbooks.Create(1);
+        }
+
+        public void Export(string[] paths, string[] values)
+        {
+            var worksheets = _workbook.Worksheets;
+            _worksheet = worksheets[0];
+
+            PaintValues(paths, values);
+
+            for (int i = 0; i < paths.Length; i++)
             {
                 for (int j = 0; j < values.Length; j++)
                 {
                     string text = File.ReadAllText(paths[i]);
 
-                    Set(i, j, text.Contains(values[i]));
+                    Set(i + 1, j + 1, text.Contains(values[i]));
                 }
+            }
+
+            Stream stream = new FileStream("Fields.xlsx", FileMode.Create, FileAccess.ReadWrite);
+            _workbook.SaveAs(stream);
+
+            Close();
+        }
+
+        private void Close()
+        {
+            _workbook.Close();
+            _excelEngine.Dispose();
+        }
+
+        private void PaintValues(string[] paths, string[] values)
+        {
+            for (int i = 0; i < values.Length; i++)
+            {
+                _worksheet.Range[$"A{i + 2}"].ColumnWidth = values[i].Length * 2;
+                _worksheet.Range[$"A{i + 2}"].Text = values[i];
+            }
+
+            for (int j = 0; j < paths.Length; j++)
+            {
+                var charCol = abc[j + 1];
+                _worksheet.Range[$"{charCol}1"].ColumnWidth = paths[j].Length * 2;
+                _worksheet.Range[$"{charCol}1"].Text = paths[j];
             }
         }
 
         private void Set(int iRow, int iCol, bool valid)
         {
-            Worksheet[iRow, iCol].CellStyle.Color = valid ? Color.Green : Color.Red;
+            var charCol = abc[iCol];
+            _worksheet.Range[$"{charCol}{iRow + 1}"].CellStyle.Color = valid ? Color.Green : Color.Red;
         }
     }
 }

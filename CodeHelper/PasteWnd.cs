@@ -20,7 +20,7 @@
 
             this.Destination = destination;
             Button.Text = destination == PasteWndType.Paste ? "Paste Code" : "Check Code";
-            
+
             this.files = files;
         }
 
@@ -32,7 +32,6 @@
             }
             else
             {
-                //CheckCode();
                 CheckWithExport();
             }
 
@@ -64,7 +63,7 @@
                         resultString += $"Текст \n{ str } \nв файле \n{ file }\n НЕ ВСТРЕЧАЕТСЯ\n";
                     }
                 }
-                
+
                 resultString = !string.IsNullOrEmpty(valid)
                     ? valid
                     : resultString;
@@ -79,7 +78,7 @@
 
             if (!string.IsNullOrWhiteSpace(text))
             {
-                string[] resultStrings = text.Split(new char[] { '\n' });
+                string[] resultStrings = text.Split('\n');
                 return resultStrings;
             }
 
@@ -88,8 +87,8 @@
 
         private void CheckWithExport()
         {
-            XlsExport XlsExport = new XlsExport();
-            XlsExport.Initialize(files.ToArray(), FormatRichTextBox());
+            XlsExport xlsExport = new XlsExport();
+            xlsExport.Export(files.ToArray(), FormatRichTextBox());
         }
     }
 }
